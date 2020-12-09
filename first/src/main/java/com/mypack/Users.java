@@ -1,4 +1,4 @@
-package com.example.first;
+package com.mypack;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,19 +7,40 @@ import javax.persistence.Id;
 
 @Entity
 public class Users {
-    @Id
+	
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 	private String username;
 	private String firstname;
 	private String lastname;
 	private String password;
 	private String mail;
 	private long phno;
-	public int getId() {
+	
+	
+	public Users() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	public Users(long id,String username, String firstname, String lastname, String password, String mail, long phno) {
+		super();
+		this.id=id;
+		this.username = username;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.password = password;
+		this.mail = mail;
+		this.phno = phno;
+	}
+
+
+	public long getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getUsername() {
@@ -64,6 +85,5 @@ public class Users {
 				+ ", password=" + password + ", mail=" + mail + ", phno=" + phno + "]";
 	}
 	
-
 
 }
