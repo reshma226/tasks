@@ -1,4 +1,4 @@
-package com.mypack;
+package com.mypack.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

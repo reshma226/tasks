@@ -19,7 +19,7 @@
   </header>
   <div class="starter-template">
    <h1>Users List</h1>
-   <form action="/delete">
+   
    <table
     class="table table-striped table-hover table-condensed table-bordered">
     <tr>
@@ -28,17 +28,23 @@
      <th>Phone Number</th>
      <th></th>
     </tr>
+   
     <c:forEach var="user" items="${users}">
      <tr>
       <td>${user.id}</td>
       <td>${user.username}</td>
       <td>${user.phno }</td>
-      
-      <td><input type="submit" value="delete" name=${user.id}>
+      <td>
+      <form action="/delete" method="post">
+      <input type="hidden" value="${user.id}" name="id">
+      <input type="submit" value="Delete" >
+      </form>
+      </td>
      </tr>
     </c:forEach>
+    
    </table>
-   </form>
+   
   </div>
 
  </div>

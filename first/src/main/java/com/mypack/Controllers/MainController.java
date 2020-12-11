@@ -1,11 +1,13 @@
-package com.mypack;
+package com.mypack.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.mypack.models.Users;
+import com.mypack.repository.UserRepos;
 
 
 @Controller
@@ -13,7 +15,17 @@ public class MainController {
 
 	@Autowired
 	UserRepos r;
-			
+	public static String uname;
+	
+	
+	public static String getUname() {
+		return uname;
+	}
+
+	public static void setUname(String uname) {
+		MainController.uname = uname;
+	}
+
 	@RequestMapping("/")
 	public String first()
 	{
@@ -22,7 +34,7 @@ public class MainController {
 	}
 	
 	@RequestMapping("/register")
-	public String register(@RequestParam("fname") String fn,@RequestParam("lname") String ln,@RequestParam("name") String n,@RequestParam("password") String p,@RequestParam("mail") String m,@RequestParam("ph") long ph)
+	public String register(@RequestParam("firstName") String fn,@RequestParam("lastName") String ln,@RequestParam("username") String n,@RequestParam("password") String p,@RequestParam("mail") String m,@RequestParam("phoneno") long ph)
 	{
 		long id=r.count();
 		id=id+1;
@@ -32,14 +44,13 @@ public class MainController {
 	}
 	
 	@RequestMapping("/login")
-	
-	public ModelAndView validate(@RequestParam("name") String name,@RequestParam("password") String p,ModelAndView m)
+	public ModelAndView validate(@RequestParam("username") String name,@RequestParam("password") String p)
 	{
-		Users u1= new Users();
+		ModelAndView m=new ModelAndView();
 		String s1=null,s2=null;
 		if(name.equals("admin") && p.equals("admin123")) 
 		{ 
-		u1.setUsername(name);
+		setUname(name);
 		m.addObject("name", name);
 		m.setViewName("admin.jsp");
 		return m;
@@ -57,7 +68,9 @@ public class MainController {
 		{
 			if(s1.equals(name) && s2.equals(p))
 			{
-				u1.setUsername(name);
+				System.out.println(name);
+				setUname(name);
+				System.out.println(name);
 				m.addObject("name", name);
 				m.setViewName("user.jsp");
 				
@@ -72,8 +85,10 @@ public class MainController {
 			m.addObject("error", "User does not exist");
 			m.setViewName("Login.jsp");
 		}
+		System.out.println(uname);
 		return m;
 		
 	}
+		
 	}
 }

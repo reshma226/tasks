@@ -11,10 +11,13 @@
 <div align="center">
 ${error}
 <form action="/login" method="post">
-User name <input type="text" name="name"><br><br>
+
+User name <input type="text" name="username"><br><br>
 password <input type="password" name="password"><br><br>
+
 <input type="submit" value="Login"  ><br><br><br>
-<a href="/pages/Reg.jsp">Not a registered user? click here</a>
+
+<a href="reg.jsp">Not a registered user? click here</a>
 </form>
 
 </div>

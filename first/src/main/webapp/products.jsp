@@ -18,7 +18,7 @@
    <h1>Hi ${name}, welcome </h1>
   </header>
   <div class="starter-template">
-   <h1>Products List</h1>
+   <h1>Products</h1>
   
    <table
     class="table table-striped table-hover table-condensed table-bordered">
@@ -26,20 +26,36 @@
      <th>Id</th>
      <th>Name</th>
      <th>Price(per piece)</th>
-     <th>Quantity Remaining</th>
-     
+     <th>Product Quantity</th>
+     <th></th>
+     <th></th>
     </tr>
+     
     <c:forEach var="product" items="${products}">
+    
      <tr>
+     
       <td>${product.id}</td>
       <td>${product.name}</td>
       <td>${product.price }</td>
-      <td>${product.quantity}</td>
       
-      
+      <td>
+      <form action="/addproduct" >
+      <input type="number" name="qty">
+      <input type="hidden" value="${product.id}" name="pid">
+      <input type="submit" value="Add to Cart">
+      </form>
+      </td>
+       <td>
+      <form action="/notify" method="post">
+      <input type="hidden" value="${product.id}" name="pid">
+      <input type="submit" value="Notify">
+      </form>
+      </td>
      </tr>
+     
     </c:forEach>
-   </table>
+     </table>
    
   </div>
 

@@ -1,4 +1,4 @@
-package com.mypack;
+package com.mypack.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,13 +18,8 @@ public class Users {
 	private String mail;
 	private long phno;
 	
-	
-	public Users() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	
-	
+		
+		
 	public Users(long id,String username, String firstname, String lastname, String password, String mail, long phno) {
 		super();
 		this.id=id;
@@ -34,6 +29,13 @@ public class Users {
 		this.password = password;
 		this.mail = mail;
 		this.phno = phno;
+		
+	}
+
+
+	public Users() {
+		super();
+		// TODO Auto-generated constructor stub
 	}
 
 
