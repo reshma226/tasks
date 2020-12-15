@@ -1,31 +1,34 @@
 package com.mypack.models;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Users {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String username;
 	private String firstname;
 	private String lastname;
 	private String password;
 	private String mail;
-	private long phno;
+	private long phoneno;
 	
 		
 		
-	public Users(long id,String username, String firstname, String lastname, String password, String mail, long phno) {
+	public Users(String username, String firstname, String lastname, String password, String mail, long phoneno) {
 		super();
-		this.id=id;
+		
 		this.username = username;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.password = password;
 		this.mail = mail;
-		this.phno = phno;
+		this.phoneno = phoneno;
 		
 	}
 
@@ -72,16 +75,16 @@ public class Users {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
-	public long getPhno() {
-		return phno;
+	public long getPhoneno() {
+		return phoneno;
 	}
-	public void setPhno(long phno) {
-		this.phno = phno;
+	public void setPhoneno(long phno) {
+		this.phoneno = phno;
 	}
 	@Override
 	public String toString() {
 		return "Users [id=" + id + ", username=" + username + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", password=" + password + ", mail=" + mail + ", phno=" + phno + "]";
+				+ ", password=" + password + ", mail=" + mail + ", phno=" + phoneno + "]";
 	}
 	
 

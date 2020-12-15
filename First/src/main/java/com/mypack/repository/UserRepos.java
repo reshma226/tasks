@@ -9,6 +9,6 @@ import com.mypack.models.Users;
 @Repository
 public interface UserRepos extends JpaRepository<Users, Long> 
 {
- 
+	Users findById(long id);
 	List<Users> findByusername(String username);
 	 }

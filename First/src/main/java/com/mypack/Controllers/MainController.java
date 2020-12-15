@@ -1,95 +1,83 @@
 package com.mypack.Controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.mypack.models.Users;
 import com.mypack.repository.UserRepos;
 
 
-@Controller
+@RestController
 public class MainController {
 
 	@Autowired
 	UserRepos r;
-	public static String uname;
 	
-	
-	public static String getUname() {
-		return uname;
-	}
-
-	public static void setUname(String uname) {
-		MainController.uname = uname;
-	}
-
-	@RequestMapping("/")
-	public String first()
-	{
-				
-		return "Login.jsp";
-	}
-	
-	@RequestMapping("/register")
-	public String register(@RequestParam("firstName") String fn,@RequestParam("lastName") String ln,@RequestParam("username") String n,@RequestParam("password") String p,@RequestParam("mail") String m,@RequestParam("phoneno") long ph)
-	{
-		long id=r.count();
-		id=id+1;
-		Users u=new Users(id,n,fn,ln,p,m,ph);
-		r.save(u);
-		System.out.println(u);
-		return "Login.jsp";
-	}
-	
-	@RequestMapping("/login")
-	public ModelAndView validate(@RequestParam("username") String name,@RequestParam("password") String p)
-	{
-		ModelAndView m=new ModelAndView();
-		String s1=null,s2=null;
-		if(name.equals("admin") && p.equals("admin123")) 
-		{ 
-		setUname(name);
-		m.addObject("name", name);
-		m.setViewName("admin.jsp");
-		return m;
-		}
-		else {
-		for(Users u: r.findByusername(name))
-		{
-			
-			s1=u.getUsername();
-			s2=u.getPassword();
-			
-		}
 		
-		if(s1!=null) 
+	@PostMapping("/users/register")
+	ResponseEntity<?> register(@RequestBody Users user) throws Error
+	{
+		
+		Users u1=new Users();
+		
+		for(Users u:r.findByusername(user.getUsername()))
 		{
-			if(s1.equals(name) && s2.equals(p))
+			if(u.getUsername()!=null)
 			{
-				System.out.println(name);
-				setUname(name);
-				System.out.println(name);
-				m.addObject("name", name);
-				m.setViewName("user.jsp");
-				
-				
+				throw new Error("User "+u.getUsername()+" is taken");
 			}
 			else {
-				m.addObject("error", "Invalid credentials");
-				m.setViewName("Login.jsp");
+				u1.setFirstname(user.getFirstname());
+				u1.setLastname(user.getLastname());
+				u1.setUsername(user.getUsername());
+				u1.setPassword(user.getPassword());
+				u1.setMail(user.getMail());
+				u1.setPhoneno(user.getPhoneno());
+				r.save(u1);
 			}
+			
 		}
-		else {
-			m.addObject("error", "User does not exist");
-			m.setViewName("Login.jsp");
-		}
-		System.out.println(uname);
-		return m;
-		
+		return ResponseEntity.ok().body(u1);
+
 	}
+	
+	@PostMapping("/users/authenticate")
+	ResponseEntity<?> validate(@RequestBody String username,@RequestBody String password)throws Error
+	{
+		Users user=new Users();
 		
+		
+		for(Users u: r.findByusername(username))
+		{
+			
+			user.setUsername(u.getUsername());
+			user.setPassword(u.getPassword());
+			user.setId(u.getId());
+						
+		}
+		if(username.equals("admin") && password.equals("admin123")) 
+		{ 
+			user=r.findById(user.getId());	
+		}
+		
+		else if(user.getUsername()!=null) 
+		{
+			if(user.getUsername().equals(username) && user.getPassword().equals(password))
+			{
+				user=r.findById(user.getId());
+				
+			} 
+									
+		}
+		else
+		{
+			throw new Error("User Name or password incorrect");
+		}
+		
+	
+		return ResponseEntity.ok().body(user);
 	}
 }

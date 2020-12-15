@@ -2,12 +2,15 @@ package com.mypack.models;
 
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Embeddable
 @Entity
 public class Cart {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String uname;
 	private int pid;
@@ -80,10 +83,9 @@ public class Cart {
 	}
 
 
-	public Cart(int id, String uname, int pid, String pname, int quantity,float price) {
+	public Cart(String uname, int pid, String pname, int quantity,float price) {
 		super();
 		this.price=price;
-		this.id = id;
 		this.uname = uname;
 		this.pid = pid;
 		this.pname = pname;

@@ -1,11 +1,14 @@
 package com.mypack.models;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Requests {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String uname;
 	private int pid;
@@ -16,9 +19,9 @@ public class Requests {
 		super();
 	}
 	
-	public Requests(int id,String uname, int pid, String pname, int quantity) {
+	public Requests(String uname, int pid, String pname, int quantity) {
 		super();
-		this.id=id;
+		
 		this.uname = uname;
 		this.pid = pid;
 		this.pname = pname;

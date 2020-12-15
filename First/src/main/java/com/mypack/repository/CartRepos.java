@@ -11,4 +11,6 @@ public interface CartRepos extends JpaRepository<Cart, Integer> {
 
 	Cart findById(int id);
 	List<Cart> findByuname(String uname);
+	List<Cart> findBypid(int id);
+	
 }
